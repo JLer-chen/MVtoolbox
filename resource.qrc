@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/background.jpg</file>
+        <file>images/background2.jpg</file>
+        <file>images/blue_camera.png</file>
+        <file>images/blue_help.png</file>
+        <file>images/blue_list.png</file>
+        <file>images/blue_loop.png</file>
+        <file>images/blue_once.png</file>
+        <file>images/blue_path.png</file>
+        <file>images/clear.png</file>
+        <file>images/logo.jpg</file>
+        <file>images/orange_camera.png</file>
+        <file>images/orange_path.png</file>
+        <file>images/zhouxuan.ico</file>
+        <file>images/instru_camera.png</file>
+        <file>images/setting.png</file>
+        <file>images/board.png</file>
+    </qresource>
+</RCC>
