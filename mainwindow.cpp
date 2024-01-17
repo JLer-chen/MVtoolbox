@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //consumer call the plugin
     connect(ui->camera_action,&QAction::triggered,this,&MainWindow::camera_setting);
     connect(consumer,&imageConsumer::callPluginByOne,managerView,&pluginManagerView::process);
-    connect(consumer,&imageConsumer::callPluginByThread,managerView,&pluginManagerView::process);
+    connect(consumer,&imageConsumer::callPluginByThread,managerView,&pluginManagerView::process,Qt::BlockingQueuedConnection);
 
     connect(ui->loop_action,&QAction::triggered,this,&MainWindow::slotLoopRun);
     //算法插件处理完图像后emit to view
