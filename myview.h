@@ -1,4 +1,4 @@
-#ifndef MYVIEW_H
+ #ifndef MYVIEW_H
 #define MYVIEW_H
 #include <QGraphicsView>
 #include <QGraphicsScene>

@@ -25,28 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    imageproducer.cpp \
-    userlistwidgets.cpp \
-    userlwidgetsitem.cpp \
-    usergraphicsview.cpp \
-    userimageitem.cpp \
-    myview.cpp
+        *.cpp \
+
+
+
+
+
 
 HEADERS += \
-        mainwindow.h \
-    imageproducer.h \
-    userlistwidgets.h \
-    userlwidgetsitem.h \
-    usergraphicsview.h \
-    userimageitem.h \
-    myview.h
+   *.h \
+
+
+
+
 
 FORMS += \
         mainwindow.ui \
     userlistwidgets.ui \
-    userlwidgetsitem.ui
+    userlwidgetsitem.ui \
+    pluginmanagerview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

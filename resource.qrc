@@ -16,5 +16,6 @@
         <file>images/instru_camera.png</file>
         <file>images/setting.png</file>
         <file>images/board.png</file>
+        <file>images/orange_loop.png</file>
     </qresource>
 </RCC>

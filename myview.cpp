@@ -8,6 +8,7 @@ Myview::Myview(QWidget *parent )
 
 }
 
+
 void Myview::Translate(QPointF delta)
 {
     int w = viewport()->rect().width();
@@ -31,19 +32,19 @@ void Myview::wheelEvent(QWheelEvent *event)
 void Myview::mousePressEvent(QMouseEvent *event)
 {
     QGraphicsItem *item = itemAt(event->pos());
-    qDebug()<<tr("before")<<endl;
+   // qDebug()<<tr("before")<<endl;
 //    if(item && (item->type() != QGraphicsPixmapItem::Type)){
 //        QGraphicsView::mousePressEvent(event);
 //        return ;
 //    }
-    qDebug()<<tr("fanhui")<<endl;
+    //qDebug()<<tr("fanhui")<<endl;
     if(event->button() == Qt::LeftButton){
 
         m_isPush = true;
         m_lastMousePos = event->pos();
     }
     QGraphicsView::mousePressEvent(event);
-    qDebug()<<m_isPush<<endl;
+    //qDebug()<<m_isPush<<endl;
 }
 
 void Myview::mouseMoveEvent(QMouseEvent *event)
@@ -57,7 +58,7 @@ void Myview::mouseMoveEvent(QMouseEvent *event)
     Translate(delta);
     m_lastMousePos = event->pos();
     QGraphicsView::mouseMoveEvent(event);
-    qDebug()<<m_lastMousePos.x()<<endl;
+    //qDebug()<<m_lastMousePos.x()<<endl;
 }
 
 void Myview::mouseReleaseEvent(QMouseEvent *event)
@@ -72,5 +73,5 @@ void Myview::mouseReleaseEvent(QMouseEvent *event)
         //m_lastMousePos = event->pos();
     }
     QGraphicsView::mouseReleaseEvent(event);
-    qDebug()<<m_isPush<<endl;
+    //qDebug()<<m_isPush<<endl;
 }

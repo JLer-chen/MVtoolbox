@@ -9,6 +9,7 @@ public:
     UserGraphicsView();
     Myview* getWindow();
     void showImage(QString path);
+    bool showDstImage(QString ImagePath);
 private:
     Myview *m_window;
     QGraphicsScene *scene;

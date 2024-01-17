@@ -1,4 +1,4 @@
-#ifndef USERLISTWIDGETS_H
+ #ifndef USERLISTWIDGETS_H
 #define USERLISTWIDGETS_H
 
 #include <QWidget>
@@ -20,6 +20,9 @@ public:
     void setConnect(Myview* window);
     int getNumberofItem();
     UserLWidgetsItem* getItem(int num);
+
+    //返回选择所有图片的路径
+    QStringList getImageList();
 private slots:
     void on_pushButton_clicked();
 

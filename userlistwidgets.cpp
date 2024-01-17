@@ -58,6 +58,12 @@ UserLWidgetsItem *UserListWidgets::getItem(int num)
     return itemList.at(num);
 }
 
+
+QStringList UserListWidgets::getImageList()
+{
+    return m_imagelist;
+}
+
 //void UserListWidgets::setConnect(Myview *window)
 //{
 //    connect()
@@ -67,7 +73,7 @@ void UserListWidgets::on_pushButton_clicked()
 {
     QFileDialog *file = new QFileDialog(this);
     file->setWindowTitle(tr("打开图片"));
-    file->setDirectory("D://");
+    file->setDirectory("D:/888/image.vary.jpg/image.vary.jpg");
     file->setNameFilter(tr("Image(*.png *jpg *.bmp)"));
     file->setFileMode(QFileDialog::ExistingFiles);
     file->setViewMode(QFileDialog::Detail);
