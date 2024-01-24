@@ -15,6 +15,7 @@ Controller::~Controller(){
     qDebug()<<"before th wait";
     workThread.wait();
     qDebug()<<"after th wait";
+
 }
 
 void Controller::handleResult()

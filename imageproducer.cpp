@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTime>
+#include <QMessageBox>
 const int queue_size = 10;//图像队列的长度
 
 QWaitCondition bufferNotEmpty1;
@@ -46,6 +47,7 @@ void imageProducer::run()
         int before = QTime::currentTime().msecsSinceStartOfDay();
         imageBuffer.enqueue(QImage(readImageList.at(curPoint)));
         curPoint++;
+        timeByOne = QTime::currentTime().msecsSinceStartOfDay() - before;
         qDebug()<<"[FUNCTION]:"<<__FUNCTION__<<"[LINE]:"<<__LINE__<<"[LOG]:"
                <<"image into queue 耗时："<<QTime::currentTime().msecsSinceStartOfDay() - before;
         bufferNotEmpty1.wakeAll();
@@ -56,7 +58,7 @@ void imageProducer::run()
 
 bool imageProducer::produceOneImage()
 {
-    //QTime time;
+    //获取当前时间以便计算这段代码的耗时
     int before = QTime::currentTime().msecsSinceStartOfDay();
 
     //从容器中读取内容时需要判断下标是否合法
@@ -74,7 +76,7 @@ bool imageProducer::produceOneImage()
     //但不用给队列上锁，因为同步操作由代码顺序控制。
     if(this->isFull()){
         qDebug()<<"queue is already fulled";
-        return false;}
+        return true;}//队列满了也要返回true，因为说明消费者是可以取图的
 
     imageBuffer.enqueue(QImage(curImage));
     curPoint++;
@@ -108,4 +110,9 @@ bool imageProducer::isEmpty()
         return false;
     }
     return true;
+}
+
+int imageProducer::getTime()
+{
+    return timeByOne;
 }

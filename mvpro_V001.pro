@@ -32,8 +32,10 @@ SOURCES += \
 
 
 
+
 HEADERS += \
    *.h \
+
 
 
 

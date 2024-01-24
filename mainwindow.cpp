@@ -59,15 +59,18 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->loop_action,&QAction::triggered,this,&MainWindow::slotLoopRun);
     //算法插件处理完图像后emit to view
     connect(managerView,&pluginManagerView::sendDstImage,window,&UserGraphicsView::showDstImage);
-    QDialog* dialog = new QDialog(this);
-    dialog->setWindowTitle(tr("note！"));
-    QLabel* label = new QLabel(dialog);
-    label->setText(tr("please firstly confirm the camera setting on the top left corner."));
-    label->resize(800,50);
-    dialog->show();
+
+    QMessageBox::information(this,tr("重要提示！！！"),tr("请首先设置图像处理后的存储位置。"));
     qDebug()<<"cur working dire:"<<QDir::currentPath();
     qDebug()<<"[FUNCTION]:"<<__FUNCTION__<<"[LINE]:"<<__LINE__<<"[LOG]:"
            <<"curTime:"<<QTime::currentTime().toString("hh:mm:ss.zzz");
+
+
+    AlgoState = new stateBar();
+    ui->statusBar->showMessage(tr("读图时间：- ，算法处理时间：-"),0);
+    qDebug()<<AlgoState->getInfo();
+    AlgoState->setInfo(stateBar::LOOPPROCESS);
+    qDebug()<<AlgoState->getInfo();
 }
 
 
@@ -167,6 +170,12 @@ void MainWindow::camera_setting()
  */
 void MainWindow::on_once_action_triggered()
 {
+    //获取插件管理器算法选择情况
+    //用户友好型代码，没有选择算法时不能执行
+    if(!managerView->isSelected()){
+        QMessageBox::information(this,tr("错误"),tr("请先选择左侧栏的算法！"));
+        return ;
+    }
     qDebug()<<"before prouceOneImage()"<<endl;
     if(!producer->produceOneImage()){
         return ;
@@ -175,6 +184,10 @@ void MainWindow::on_once_action_triggered()
     consumer->consumOneImage();
     qDebug()<<"[FUNCTION]:"<<__FUNCTION__<<"[LINE]:"<<__LINE__<<"[LOG]:"
            <<"after consumeOneImage";
+    int readTime = producer->getTime();
+    int processTime = managerView->getOnceTimer();
+    ui->statusBar->showMessage("读图时间："+QString::number(readTime)+"ms 算法处理时间："+
+                               QString::number(processTime)+"ms");
 
 }
 /**
@@ -191,6 +204,14 @@ void MainWindow::setReadFiles()
 
 void MainWindow::slotLoopRun(bool checked)
 {
+    //获取插件管理器算法选择情况
+    //用户友好型代码，没有选择算法时不能执行
+    if(!managerView->isSelected()){
+        QMessageBox::information(this,tr("错误"),tr("请先选择左侧栏的算法！"));
+        return ;
+    }
+    //将算法占用资源栏置空，循环运行的占用资源情况待后续补充
+    ui->statusBar->showMessage(tr("读图时间：- ，算法处理时间：-"),0);
     if(checked){
         qDebug()<<"store:"<<storePath.isEmpty();
         if( storePath.isEmpty() ){
@@ -199,6 +220,7 @@ void MainWindow::slotLoopRun(bool checked)
         }
         ui->once_action->setEnabled(false);
         ui->loop_action->setIcon(QIcon(":/images/orange_loop.png"));
+
         //此时无法进行算法选择,code待补充
 
 

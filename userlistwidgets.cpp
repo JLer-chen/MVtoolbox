@@ -2,7 +2,8 @@
 #include "ui_userlistwidgets.h"
 #include <QFileDialog>
 #include <QDebug>
-
+#include <QProgressBar>
+#include <QLabel>
 #include "usergraphicsview.h"
 UserListWidgets::UserListWidgets(QWidget *parent) :
     QWidget(parent),
@@ -28,6 +29,22 @@ void UserListWidgets::updateLitimg()
 
     imglist->setMovement(QListWidget::Static);
     itemList.clear();
+    //耗时操作进度条显示
+    QWidget widget ;
+    //QVBoxLayout *layout = new QVBoxLayout(this);
+    QProgressBar bar ;
+    bar.setParent(&widget);
+    //layout->addWidget(bar);
+    //QLabel* label =new QLabel(widget);
+    //layout->addWidget(label);
+    //label->setText(tr("图片已全部读取"));
+    widget.setFixedSize(600,200);
+    bar.setGeometry(20,80,280,30);
+    bar.setRange(0,100);
+    bar.setOrientation(Qt::Horizontal);
+    bar.setValue(0);
+    int number = 0;
+    widget.show();
     for(QString tmp : m_imagelist){
         UserLWidgetsItem *item = new UserLWidgetsItem();
         item->addLitimg(tmp,imglist->height());
@@ -37,10 +54,13 @@ void UserListWidgets::updateLitimg()
         imglist->addItem(imageItem);
 
         imglist->setItemWidget(imageItem,item);
-
-        //每张缩略图在显示阶段就设置信号量和槽
-        //connect(item,item->getButtonClick()->click(),)
+        number++;
+        bar.setValue(float(number)*100.0/m_imagelist.size());
+        bar.setFormat("the progress:"+QString::number
+                       (float(number)*100.0/m_imagelist.size(), 'f', 1)+"%");
+        QCoreApplication::processEvents();
     }
+    widget.hide();
     emit enableConnect();
 }
 

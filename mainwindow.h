@@ -8,6 +8,7 @@
 #include "imageproducer.h"
 #include "imageconsumer.h"
 #include "pluginmanagerview.h"
+#include "statebar.h"
 namespace Ui {
 class MainWindow;
 }
@@ -46,7 +47,9 @@ private:
 
     QString pluginPath;//插件路径
     QString storePath;//图片处理后的存储路径
-    pluginManagerView *managerView;
+    pluginManagerView *managerView;//插件管理器
+    stateBar* AlgoState;
+
 };
 
 #endif // MAINWINDOW_H

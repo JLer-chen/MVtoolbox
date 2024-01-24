@@ -7,7 +7,9 @@
 #include <QTime>
 pluginManagerView::pluginManagerView(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::pluginManagerView)
+    ui(new Ui::pluginManagerView),
+    curIndex(-1),
+    curPlugin(nullptr)
 {
     ui->setupUi(this);
 }
