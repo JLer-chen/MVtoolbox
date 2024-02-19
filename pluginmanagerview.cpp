@@ -5,9 +5,12 @@
 #include <QDebug>
 #include <QLabel>
 #include <QTime>
+#include <QMessageBox>
 pluginManagerView::pluginManagerView(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::pluginManagerView)
+    ui(new Ui::pluginManagerView),
+    curIndex(-1),
+    curPlugin(nullptr)
 {
     ui->setupUi(this);
 }
@@ -17,8 +20,14 @@ pluginManagerView::~pluginManagerView()
     delete ui;
 }
 
-void pluginManagerView::setAlgorithmPanel(int currentRow)
+bool pluginManagerView::setAlgorithmPanel(int currentRow)
 {
+    qDebug()<<"enter setalgorithpanel";
+    if(!isInit){
+        qDebug()<<"have not inited";
+        QMessageBox::information(this,"information",tr("check storage"));
+        return false;
+    }
     curIndex = currentRow;
     curPlugin = plugins.at(curIndex);
     MainInterface* curPlugin = plugins.at(curIndex);
@@ -26,6 +35,7 @@ void pluginManagerView::setAlgorithmPanel(int currentRow)
     QWidget* curPanel = curPlugin->getSettingPanel();
     ui->gridLayout->addWidget(curPanel);
     tempPanel = curPanel;
+    return true;
 }
 
 void pluginManagerView::setAlgorithmTree()
@@ -53,9 +63,9 @@ bool pluginManagerView::loadPlugins(QString path)
     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
         qDebug()<<"String:"<<pluginsDir.absoluteFilePath(fileName)<<endl;
-         qDebug() << "Plugin loading failed:" << pluginLoader.errorString();
+        qDebug() << "Plugin loading failed:" << pluginLoader.errorString();
         QObject *plugin = pluginLoader.instance();
-         qDebug()<<"plugin:"<<plugin<<endl;
+        qDebug()<<"plugin:"<<plugin<<endl;
         if (plugin) {
             MainInterface *temp = qobject_cast<MainInterface *>(plugin);
             if (temp){
@@ -78,6 +88,7 @@ void pluginManagerView::initPlugins(QString storePath)
     for(auto i :plugins){
         i->Init(storePath);
     }
+    isInit = true;
 }
 
 int pluginManagerView::getOnceTimer()

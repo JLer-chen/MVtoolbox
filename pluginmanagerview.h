@@ -16,7 +16,7 @@ class pluginManagerView : public QWidget
 public:
     explicit pluginManagerView(QWidget *parent = nullptr);
     ~pluginManagerView();
-    void setAlgorithmPanel(int currentRow);
+    bool setAlgorithmPanel(int currentRow);
     void setAlgorithmTree();
     bool loadPlugins(QString path);
     void initPlugins(QString);
@@ -30,12 +30,13 @@ signals:
 private:
     Ui::pluginManagerView *ui;
     QString curPluginName;
-    int curIndex = -1;
+    int curIndex ;
     QVector<MainInterface* > plugins;
     int number;
-    MainInterface *curPlugin = nullptr;
+    MainInterface *curPlugin ;
     QWidget* tempPanel;
     int onceTimer ;
+    bool isInit = false;
 
 
 };

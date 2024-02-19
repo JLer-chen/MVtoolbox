@@ -85,6 +85,7 @@ void MainWindow:: InitUi(){
     ui->gridLayout_9->addWidget(window->getWindow());
 //主界面加载插件管理器
     ui->gridLayout_2->addWidget(managerView);
+    QMessageBox::information(this,"note",QDir::currentPath());
     if(!managerView->loadPlugins("../../plugins")){
         qDebug()<<"no plugin could load!";
         return ;
@@ -198,6 +199,7 @@ void MainWindow::setReadFiles()
 {
     //send arguments to producer,include path of images(直接传容器得了，
     //这样producer类就不需要额外处理了)
+    qDebug()<<"enter setRead";
     producer->setReadList(listImage->getImageList());
 
 }
@@ -222,8 +224,6 @@ void MainWindow::slotLoopRun(bool checked)
         ui->loop_action->setIcon(QIcon(":/images/orange_loop.png"));
 
         //此时无法进行算法选择,code待补充
-
-
 
         thread_mutex1.unlock();
     }else {
