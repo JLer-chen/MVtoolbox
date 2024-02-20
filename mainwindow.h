@@ -9,6 +9,7 @@
 #include "imageconsumer.h"
 #include "pluginmanagerview.h"
 #include "statebar.h"
+#include "camerasetting.h"
 namespace Ui {
 class MainWindow;
 }
@@ -44,7 +45,7 @@ private:
     UserGraphicsView *window;//视图
     imageProducer *producer;//生产者，读图进队列
     imageConsumer *consumer;//消费者，处理图像
-
+    camerasetting *camera;
     QString pluginPath;//插件路径
     QString storePath;//图片处理后的存储路径
     pluginManagerView *managerView;//插件管理器

@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QTime>
+#include <QLineEdit>
 #include "controller.h"
 #include "mainwindow.h"
 extern QMutex thread_mutex1;
@@ -86,11 +87,14 @@ void MainWindow:: InitUi(){
 //主界面加载插件管理器
     ui->gridLayout_2->addWidget(managerView);
     QMessageBox::information(this,"note",QDir::currentPath());
-    if(!managerView->loadPlugins("../../plugins")){
-        qDebug()<<"no plugin could load!";
-        return ;
-    }
-    managerView->setAlgorithmTree();
+    // if(!managerView->loadPlugins("plugins")){
+    //     qDebug()<<"no plugin could load!";
+    //     return ;
+    // }
+    // managerView->setAlgorithmTree();
+
+//相机界面创建
+    camera = new camerasetting(this);
 }
 
 MainWindow::~MainWindow()
@@ -152,13 +156,47 @@ void MainWindow::setShowImage()
 }
 
 
-
+/**
+ * @brief MainWindow::camera_setting
+ * 相机设置：设置插件所在路径和处理后的图片所在路径
+ */
 void MainWindow::camera_setting()
 {
-    storePath = QFileDialog::getExistingDirectory();
-    qDebug()<<"[FUNCTION]:"<<__FUNCTION__<<"[LINE]:"<<__LINE__<<"[LOG]:"
-           <<storePath;
-    managerView->initPlugins(storePath);
+    //原来的代码：待删除
+    // storePath = QFileDialog::getExistingDirectory();
+    // qDebug()<<"[FUNCTION]:"<<__FUNCTION__<<"[LINE]:"<<__LINE__<<"[LOG]:"
+    //        <<storePath;
+    // managerView->initPlugins(storePath);
+
+    //创建对话框，用户输入图片存储路径和插件路径
+    // QDialog *dialog = new QDialog(this);
+    // QGridLayout *layout = new QGridLayout();
+    // QLabel *storePath = new QLabel(tr("请选择图像存储路径："));
+    // QLabel *pluginPath = new QLabel(tr("请确定插件所在路径"));
+    // QLineEdit *storePath_edit = new QLineEdit;
+    // QLineEdit *pluginPath_edit = new QLineEdit;
+    // QPushButton *storePath_button = new QPushButton;
+    // QPushButton *pluginPath_button = new QPushButton;
+    // storePath_button->setIcon(QIcon(":/images/orange_path.png"));
+
+    // layout->addWidget(storePath,0,0,1,2);
+    // layout->addWidget(storePath_edit,0,3,1,4);
+    // layout->addWidget(storePath_button,0,8,1,1);
+    // dialog->setLayout(layout);
+    // dialog->show();
+
+    //判断相机设置是否成功，若成功则主线程会读取插件并初始化插件
+    if(camera->exec() == QDialog::Accepted){
+        this->show();
+        storePath = camera->get_storePath();
+        pluginPath = camera->get_pluginPath();
+        if(!managerView->loadPlugins(pluginPath)){
+            qDebug()<<"no plugin could load!";
+            return ;
+        }
+        managerView->setAlgorithmTree();
+        managerView->initPlugins(storePath);
+    }
 
 }
 

@@ -34,6 +34,7 @@ SOURCES += \
 
 
 
+
 HEADERS += \
    *.h \
 
@@ -43,7 +44,9 @@ HEADERS += \
 
 
 
+
 FORMS += \
+    camerasetting.ui \
         mainwindow.ui \
     userlistwidgets.ui \
     userlwidgetsitem.ui \

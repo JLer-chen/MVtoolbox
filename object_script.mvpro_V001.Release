@@ -1,3 +1,4 @@
+release/camerasetting.o
 release/controller.o
 release/imageconsumer.o
 release/imageproducer.o
@@ -12,6 +13,7 @@ release/userlistwidgets.o
 release/userlwidgetsitem.o
 release/worker.o
 release/qrc_resource.o
+release/moc_camerasetting.o
 release/moc_controller.o
 release/moc_imageconsumer.o
 release/moc_imageproducer.o

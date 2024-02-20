@@ -1,3 +1,4 @@
+debug/camerasetting.o
 debug/controller.o
 debug/imageconsumer.o
 debug/imageproducer.o
@@ -12,6 +13,7 @@ debug/userlistwidgets.o
 debug/userlwidgetsitem.o
 debug/worker.o
 debug/qrc_resource.o
+debug/moc_camerasetting.o
 debug/moc_controller.o
 debug/moc_imageconsumer.o
 debug/moc_imageproducer.o
